@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import App from './App';
 import { addTable } from './reducers/tables/actions';
 
-const mapStateToProps = ({ tables, modal }) => ({
-  tables,
-  modal
+const mapStateToProps = ({ tables }) => ({
+  tables
 });
 
 const mapDispatchToProps = () => dispatch => ({

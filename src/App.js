@@ -5,13 +5,11 @@ import './App.css';
 import '../public/stylesheets/style.css'
 import Canvas from './Canvas/CanvasContainer';
 import Sidebar from './Sidebar/Sidebar';
-import { Grid, Col, Row, Modal } from 'react-bootstrap';
+import { Grid, Col, Row } from 'react-bootstrap';
+import TableModal from './TableModal/TableModalContainer';
 
 class App extends Component {
   render() {
-    const { modal } = this.props;
-    const showModal = modal.show;
-
     return (
       <Grid>
         <Row className="show-grid">
@@ -21,11 +19,7 @@ class App extends Component {
           <Col sm={7} md={7} lg={7}>
             <Canvas />
             <button onClick={() => this.props.createTable('test')}>Add testing table</button>
-            <Modal show={showModal}>
-              <Modal.Body>
-                <h4>Text in a modal</h4>
-              </Modal.Body>
-            </Modal>
+            <TableModal />
           </Col>
           <Col sm={3} md={3} lg={3}>
             code
