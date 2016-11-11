@@ -6,7 +6,8 @@ class TableModal extends Component {
     super(props);
     this.state = {
       name: "",
-      fields: {},
+      fields: [], // array of field names
+      fieldProps: {}, // keys are field names, values are arrays containing key/value pair of prop name and prop value
       addingField: false,
       currentFieldInput: ""
     };
@@ -33,7 +34,7 @@ class TableModal extends Component {
             <Row>
               <h3>Fields:</h3>
             </Row>
-            {Object.keys(this.state.fields).map((fieldName, keyIdx) => (
+            {this.state.fields.map((fieldName, keyIdx) => (
               <Row key={keyIdx}>
                 <h4>{fieldName}</h4>
               </Row>
@@ -64,7 +65,7 @@ class TableModal extends Component {
 
   blurFieldInput() {
     this.setState({addingField: false});
-    this.setState({fields: {...this.state.fields, [this.state.currentFieldInput]: {}}});
+    this.setState({fields: [...this.state.fields, this.state.currentFieldInput]});
     this.setState({currentFieldInput: ""});
   }
 
