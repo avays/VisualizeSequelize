@@ -7,6 +7,7 @@ import Canvas from './Canvas/CanvasContainer';
 import Sidebar from './Sidebar/Sidebar';
 import { Grid, Col, Row } from 'react-bootstrap';
 import TableModal from './TableModal/TableModalContainer';
+import CodePane from './CodePane/CodePaneContainer';
 
 class App extends Component {
   render() {
@@ -18,11 +19,10 @@ class App extends Component {
           </Col>
           <Col sm={7} md={7} lg={7}>
             <Canvas />
-            <button onClick={() => this.props.createTable('test')}>Add testing table</button>
             <TableModal />
           </Col>
           <Col sm={3} md={3} lg={3}>
-            code
+            <CodePane />
           </Col>
         </Row>
       </Grid>
