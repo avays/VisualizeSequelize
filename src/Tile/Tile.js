@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import store from '../store';
 import { showModal } from '../reducers/modal/actions';
+import { setNewTableCoords } from '../reducers/newTableCoords/actions';
 
 const tileTarget = {
   drop: (props, monitor) => {
-    console.log(props);
-    console.log(monitor);
-    console.log(monitor.getItemType());
+    const coords = monitor.getClientOffset();
     store.dispatch(showModal());
+    store.dispatch(setNewTableCoords(coords))
   }
 };
 
@@ -18,6 +18,7 @@ const collect = (connect, monitor) => {
   }
 };
 
+@DropTarget(['TABLE_GLYPH'], tileTarget, collect)
 class Tile extends Component {
   render() {
     const { connectDropTarget } = this.props;
@@ -33,4 +34,4 @@ class Tile extends Component {
   }
 }
 
-export default DropTarget(['TABLE_GLYPH'], tileTarget, collect)(Tile);
+export default Tile;
