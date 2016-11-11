@@ -53,6 +53,7 @@
   "dependencies": {
     "node-sass": "^3.11.2",
     "react": "^15.3.2",
+    "react-bootstrap": "^0.30.6",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.3.2",
@@ -63,7 +64,7 @@
   },
   "scripts": {
     "build-css": "node-sass assets/stylesheets/ -o public/stylesheets/",
-    "start": "npm run build-css && node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },

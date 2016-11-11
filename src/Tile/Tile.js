@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
+import { DropTarget } from 'react-dnd';
+import store from '../store';
+import { showModal } from '../reducers/modal/actions';
 
-export default class Tile extends Component {
+const tileTarget = {
+  drop: (props, monitor) => {
+    console.log(props);
+    console.log(monitor);
+    console.log(monitor.getItemType());
+    store.dispatch(showModal());
+  }
+};
+
+const collect = (connect, monitor) => {
+  return {
+    connectDropTarget: connect.dropTarget()
+  }
+};
+
+class Tile extends Component {
   render() {
-    return (
+    const { connectDropTarget } = this.props;
+ 
+    return connectDropTarget(
         <div style={{
           width: '100%',
           height: '100%'
@@ -12,3 +32,5 @@ export default class Tile extends Component {
     );
   }
 }
+
+export default DropTarget(['TABLE_GLYPH'], tileTarget, collect)(Tile);

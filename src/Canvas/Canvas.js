@@ -8,8 +8,8 @@ export default class Canvas extends Component {
 
     return (
         <div style={{
-          width: '50vw',
-          height: '100vh'
+          width: '700px',
+          height: '700px'
         }}>
         <Grid />
       </div>
