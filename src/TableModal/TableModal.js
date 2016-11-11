@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Grid, Row, Col } from 'react-bootstrap';
 
 class TableModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: "",
+      fields: {},
+      addingField: false,
+      currentFieldInput: ""
     };
 
     this.nameInput = this.nameInput.bind(this);
     this.submitBtn = this.submitBtn.bind(this);
+    this.addFieldBtn = this.addFieldBtn.bind(this);
+    this.blurFieldInput = this.blurFieldInput.bind(this);
+    this.addFieldInput = this.addFieldInput.bind(this);
   }
 
   render() {
@@ -18,22 +24,61 @@ class TableModal extends Component {
 
     return (
       <Modal show={showModal}>
-        <Modal.Body>
-          <h4>test text</h4>
+        <Modal.Header>
+          <h1>Model:</h1>
           <input onInput={this.nameInput}></input>
-          <button onClick={this.submitBtn}>Submit</button>
+        </Modal.Header>
+        <Modal.Body>
+          <Grid>
+            <Row>
+              <h3>Fields:</h3>
+            </Row>
+            {Object.keys(this.state.fields).map((fieldName, keyIdx) => (
+              <Row key={keyIdx}>
+                <h4>{fieldName}</h4>
+              </Row>
+            ))}
+            <Row>
+              {this.state.addingField ?
+              <input
+              onInput={this.addFieldInput}
+              onBlur={this.blurFieldInput}
+              ></input>
+              : null }
+            </Row>
+            <Row>
+              <button onClick={this.addFieldBtn}>Add Field</button>
+            </Row>
+          </Grid>
         </Modal.Body>
+        <Modal.Footer>
+          <button onClick={this.submitBtn}>Create Model</button>
+        </Modal.Footer>
       </Modal>
     );
   }
 
+  addFieldInput(evt) {
+    this.setState({currentFieldInput: evt.target.value})
+  }
+
+  blurFieldInput() {
+    this.setState({addingField: false});
+    this.setState({fields: {...this.state.fields, [this.state.currentFieldInput]: {}}});
+    this.setState({currentFieldInput: ""});
+  }
+
   nameInput(evt) {
-    this.setState({ name: evt.target.value })
+    this.setState({ name: evt.target.value });
   }
 
   submitBtn() {
     this.props.createTable(this.state.name);
     this.props.closeModal();
+  }
+
+  addFieldBtn() {
+    this.setState({addingField: true});
   }
 }
 
