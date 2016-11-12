@@ -11,7 +11,7 @@ class CodePane extends Component {
         {Object.keys(tables).length ?
           <Tabs defaultActiveKey={0} id="code-tabs">
           {Object.keys(tables).map((tableName, idx) => (
-                <Tab eventKey={idx} key={idx} title={tableName}>{this.renderTable(tables[tableName])}</Tab>
+                <Tab eventKey={idx} key={idx} title={tableName}>{this.renderTable(tables[tableName], tableName)}</Tab>
           ))}
          </Tabs> : null
         }
@@ -19,10 +19,10 @@ class CodePane extends Component {
     );
   }
 
-  renderTable(table) {
+  renderTable(table, name) {
     return (
       <div>
-        {this.textWithNewlines(this.tableToCode(table))}
+        {this.textWithNewlines(this.tableToCode(table, name))}
       </div>
     );
   }
@@ -36,17 +36,17 @@ class CodePane extends Component {
     ));
   }
 
-  tableToCode(table) {
+  tableToCode(table, name) {
     let result = '';
     result += 'use strict;';
     result += '\n\n';
-    result += `const ${_.capitalize(table)} = db.define('${_.camelCase(table)}'), {`
+    result += `const ${_.capitalize(name)} = db.define('${_.camelCase(name)}'), {`
     result += '\n';
     result += '}, {';
     result += '\n';
     result += '});';
     result += '\n';
-    result += `module.exports =${_.capitalize(table)};`;
+    result += `module.exports = ${_.capitalize(name)};`;
 
     return result;
   }
