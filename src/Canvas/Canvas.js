@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import Table from '../Table/TableContainer';
-import Grid from '../Grid/GridContainer';
 import { DropTarget } from 'react-dnd';
 import { showModal } from '../reducers/modal/actions';
 import { setNewTableCoords } from '../reducers/newTableCoords/actions';
@@ -12,7 +12,6 @@ const canvasTarget = {
     const coords = monitor.getClientOffset();
     store.dispatch(showModal());
     store.dispatch(setNewTableCoords(coords));
-    console.log('dropped in canvas');
   }
 }
 
@@ -30,18 +29,18 @@ class Canvas extends Component {
 
     return connectDropTarget(
       <div style={{
-        width: '700px',
-        height: '700px',
-        backgroundColor: 'red'
+        width: '100%',
+        height: '100%',
+        position: 'relative'
       }}>
-        {tables.map((table, tableIdx) => (
+        {tables && Object.keys(tables).map((tableId, idx) => (
           <Draggable
-              key={tableIdx}
+              key={idx}
               handle="strong"
           >
             <div>
-              <strong><div>{table.name}</div></strong>
-              <Table name={table.name} />
+              <strong><div>{tables[tableId]}</div></strong>
+              <Table name={tables[tableId]} tableId={tableId}/>
             </div>
           </Draggable>
         ))}
@@ -51,7 +50,3 @@ class Canvas extends Component {
 }
 
 export default Canvas;
-
-/*
-    tables.map(table => <Table name={table.name} key={table.name}/>)
-*/

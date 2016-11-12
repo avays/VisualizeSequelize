@@ -4,17 +4,18 @@ import { hideModal } from '../reducers/modal/actions';
 
 import TableModal from './TableModal';
 
-const mapStateToProps = ({ modal }) => ({
-  modal
+const mapStateToProps = ({ tables, modal }) => ({
+  modal,
+  tables
 });
 
 const mapDispatchToProps = () => dispatch => ({
-  createTable: (name) => {
-    dispatch(addTable(name));
+  createTable: (tableId, name) => {
+    dispatch(addTable(tableId, name));
   },
   closeModal: () => {
     dispatch(hideModal());
   }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableModal);

@@ -1,9 +1,18 @@
+import { addField } from '../reducers/tables/actions';
 import { connect } from 'react-redux';
 
 import Table from './Table';
 
-const mapStateToProps = ({ tables }, { name }) => ({
-  table: tables.filter(table => table.name === name)[0]
+const mapStateToProps = ({ fields, props }, {tableId}) => ({
+  fields,
+  props,
+  tableId
 });
 
-export default connect(mapStateToProps, null)(Table);
+const mapDispatchToProps = () => dispatch => ({
+  createField: (tableName) => {
+    dispatch(addField(tableName));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

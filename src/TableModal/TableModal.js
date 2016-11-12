@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
-import { Modal, Grid, Row, Col } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import _ from 'lodash';
 
 class TableModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      fields: [], // array of field names
-      fieldProps: {}, // keys are field names, values are arrays containing key/value pair of prop name and prop value
-      addingField: false,
-      currentFieldInput: ""
+      error: "Model name cannot be empty."
     };
-
-    this.nameInput = this.nameInput.bind(this);
-    this.submitBtn = this.submitBtn.bind(this);
-    this.addFieldBtn = this.addFieldBtn.bind(this);
-    this.blurFieldInput = this.blurFieldInput.bind(this);
-    this.addFieldInput = this.addFieldInput.bind(this);
   }
 
   render() {
@@ -26,60 +18,44 @@ class TableModal extends Component {
     return (
       <Modal show={showModal}>
         <Modal.Header>
-          <h1>Model:</h1>
-          <input onInput={this.nameInput}></input>
+          <h1>Model:</h1><input onInput={this.setName} placeholder="Input model name" />
+          <br />
+          <span style={{color: 'red'}}>
+            {this.state.error}
+          </span>
         </Modal.Header>
         <Modal.Body>
-          <Grid>
-            <Row>
-              <h3>Fields:</h3>
-            </Row>
-            {this.state.fields.map((fieldName, keyIdx) => (
-              <Row key={keyIdx}>
-                <h4>{fieldName}</h4>
-              </Row>
-            ))}
-            <Row>
-              {this.state.addingField ?
-              <input
-              onInput={this.addFieldInput}
-              onBlur={this.blurFieldInput}
-              ></input>
-              : null }
-            </Row>
-            <Row>
-              <button onClick={this.addFieldBtn}>Add Field</button>
-            </Row>
-          </Grid>
+          <button
+              onClick={this.submitBtn}
+              disabled={this.state.error.length}
+          >Create Model</button>
         </Modal.Body>
-        <Modal.Footer>
-          <button onClick={this.submitBtn}>Create Model</button>
-        </Modal.Footer>
       </Modal>
     );
   }
 
-  addFieldInput(evt) {
-    this.setState({currentFieldInput: evt.target.value})
+  setName = (evt) => {
+    const { tables } = this.props;
+
+    if (!evt.target.value.length) {
+      this.setState({ error: "Model name cannot be empty." });
+    }
+    else if (_.values(tables).includes(evt.target.value)) {
+      this.setState({ error: "A model with this name already exists." });
+    } else {
+     this.setState( {name: evt.target.value, error: "" });
+    }
   }
 
-  blurFieldInput() {
-    this.setState({addingField: false});
-    this.setState({fields: [...this.state.fields, this.state.currentFieldInput]});
-    this.setState({currentFieldInput: ""});
-  }
-
-  nameInput(evt) {
-    this.setState({ name: evt.target.value });
-  }
-
-  submitBtn() {
-    this.props.createTable(this.state.name);
+  submitBtn = () => {
+    console.log('this.state.name', this.state.name);
+    let newTableId = 0;
+    if(Object.keys(this.props.tables).length) {
+      const keys = Object.keys(this.props.tables);
+      newTableId = +keys[keys.length - 1] + 1;
+    }
+    this.props.createTable(newTableId, this.state.name);
     this.props.closeModal();
-  }
-
-  addFieldBtn() {
-    this.setState({addingField: true});
   }
 }
 

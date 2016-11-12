@@ -8,10 +8,10 @@ class CodePane extends Component {
 
     return (
       <div>
-        {tables.length ?
+        {Object.keys(tables).length ?
           <Tabs defaultActiveKey={0} id="code-tabs">
-            {tables.map((table, idx) => {
-              return (<Tab eventKey={idx} key={idx} title={table.name}>{this.renderTable(table)}</Tab>)
+            {_.values(tables).map((table, idx) => {
+              return (<Tab eventKey={idx} key={idx} title={table}>{this.renderTable(table)}</Tab>)
             })}
          </Tabs> : null
         }
@@ -22,22 +22,31 @@ class CodePane extends Component {
   renderTable(table) {
     return (
       <div>
-        {this.tableToCode(table)}
+        {this.textWithNewlines(this.tableToCode(table))}
       </div>
     );
   }
 
+  textWithNewlines(text) {
+    return text.split('\n').map((item, idx) => (
+      <span key={idx}>
+        {item}
+        <br />
+      </span>
+    ));
+  }
+
   tableToCode(table) {
-    let result = [];
-    result.push('\'use strict\'');
-    result.push(<br />);
-    result.push(`const ${_.capitalize(table.name)} = db.define('${_.camelCase(table.name)}'), {`);
-    result.push(<br />);
-    result.push('}, {');
-    result.push(<br />);
-    result.push('});');
-    result.push(<br />);
-    result.push(`module.exports = ${_.capitalize(table.name)};`);
+    let result = '';
+    result += 'use strict;';
+    result += '\n\n';
+    result += `const ${_.capitalize(table)} = db.define('${_.camelCase(table)}'), {`
+    result += '\n';
+    result += '}, {';
+    result += '\n';
+    result += '});';
+    result += '\n';
+    result += `module.exports =${_.capitalize(table)};`;
 
     return result;
   }

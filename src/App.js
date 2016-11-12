@@ -13,15 +13,15 @@ class App extends Component {
   render() {
     return (
       <Grid>
-        <Row className="show-grid">
+        <Row>
           <Col sm={2} md={2} lg={2}>
             <Sidebar />
           </Col>
-          <Col sm={7} md={7} lg={7}>
+          <Col sm={8} md={8} lg={8} className="canvas">
             <Canvas />
             <TableModal />
           </Col>
-          <Col sm={3} md={3} lg={3}>
+          <Col sm={2} md={2} lg={2}>
             <CodePane />
           </Col>
         </Row>
