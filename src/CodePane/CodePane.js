@@ -10,9 +10,9 @@ class CodePane extends Component {
       <div>
         {Object.keys(tables).length ?
           <Tabs defaultActiveKey={0} id="code-tabs">
-            {_.values(tables).map((table, idx) => {
-              return (<Tab eventKey={idx} key={idx} title={table}>{this.renderTable(table)}</Tab>)
-            })}
+          {Object.keys(tables).map((tableName, idx) => (
+                <Tab eventKey={idx} key={idx} title={tableName}>{this.renderTable(tables[tableName])}</Tab>
+          ))}
          </Tabs> : null
         }
       </div>

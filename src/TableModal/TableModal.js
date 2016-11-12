@@ -48,13 +48,9 @@ class TableModal extends Component {
   }
 
   submitBtn = () => {
-    console.log('this.state.name', this.state.name);
-    let newTableId = 0;
-    if(Object.keys(this.props.tables).length) {
-      const keys = Object.keys(this.props.tables);
-      newTableId = +keys[keys.length - 1] + 1;
-    }
-    this.props.createTable(newTableId, this.state.name);
+    this.props.createTable({
+      [this.state.name]: {}
+    });
     this.props.closeModal();
   }
 }

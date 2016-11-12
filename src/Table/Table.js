@@ -11,24 +11,6 @@ class Table extends Component {
 
     return (
       <div>
-        {fields && fields[tableId].map(field => (
-          <div>
-            {Object.keys(field).map(fieldName => (
-              <div>
-                {fieldName}
-                {field[fieldName].map(propId => (
-                  <div>
-                    {Object.keys(props[propId]).map(propName => (
-                        <div>
-                          {propName}:{props[propId][propName]}
-                        </div>
-                      ))}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
       </div>
     );
   }

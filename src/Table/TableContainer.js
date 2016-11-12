@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 
 import Table from './Table';
 
-const mapStateToProps = ({ fields, props }, {tableId}) => ({
-  fields,
-  props,
-  tableId
+const mapStateToProps = ({ tables }) => ({
+  tables
 });
 
 const mapDispatchToProps = () => dispatch => ({

@@ -10,8 +10,8 @@ const mapStateToProps = ({ tables, modal }) => ({
 });
 
 const mapDispatchToProps = () => dispatch => ({
-  createTable: (tableId, name) => {
-    dispatch(addTable(tableId, name));
+  createTable: (table) => {
+    dispatch(addTable(table));
   },
   closeModal: () => {
     dispatch(hideModal());

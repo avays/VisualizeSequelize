@@ -33,14 +33,14 @@ class Canvas extends Component {
         height: '100%',
         position: 'relative'
       }}>
-        {tables && Object.keys(tables).map((tableId, idx) => (
+        {tables && Object.keys(tables).map((tableName, idx) => (
           <Draggable
               key={idx}
               handle="strong"
           >
             <div>
-              <strong><div>{tables[tableId]}</div></strong>
-              <Table name={tables[tableId]} tableId={tableId}/>
+              <strong><div>{tableName}</div></strong>
+              <Table name={tableName} />
             </div>
           </Draggable>
         ))}
