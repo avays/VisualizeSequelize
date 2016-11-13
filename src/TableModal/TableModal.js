@@ -18,7 +18,7 @@ class TableModal extends Component {
     if(!this.state.name) {
       const modal = store.getState().modal;
       console.log('modal:', modal);
-      modal && modal.tablename && this.setState({name: modal.tablename, fields: modal.table.fields })
+      modal && modal.tablename && this.setState({name: modal.tablename, fields: modal.table.fields, associations: modal.table.associations })
     }
   }
 
@@ -112,7 +112,7 @@ class TableModal extends Component {
         result.push(this.genFields(this.state.fields[fieldKey], fieldKey));
       }
     }
-    if (this.state.fields[lastNum].Type && this.state.fields[lastNum].Type !== '...' && this.state.fields[lastNum].Name) {
+    if (this.state.fields[lastNum].Type && this.state.fields[lastNum].Type != '...' && this.state.fields[lastNum].Name) {
       result.push(this.genFields({[lastNum + 1]: {}}, lastNum + 1));
     }
     return result;
@@ -128,7 +128,7 @@ class TableModal extends Component {
     
     console.log('num',lastNum);
     console.log('association',this.state.associations);
-    if (this.state.associations[lastNum].Type && this.state.associations[lastNum].Type !== '...' && this.state.associations[lastNum].Name) {
+    if (this.state.associations[lastNum].Type && this.state.associations[lastNum].Type != '...' && this.state.associations[lastNum].Name) {
       result.push(this.genAssociations({[lastNum + 1]: {}}, lastNum + 1));
     }
     return result;
@@ -142,6 +142,8 @@ class TableModal extends Component {
     if(!Temptables[this.state.name]){Temptables[this.state.name] = {}}
     
     const result = [];
+    result.push(<option value='...'>'...'</option>);
+    
     for (let tableName in Temptables){
       result.push(<option value={tableName}>{tableName}</option>);
     }
