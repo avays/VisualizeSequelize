@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class Table extends Component {
   constructor(props) {
@@ -6,12 +8,44 @@ class Table extends Component {
     this.addField = this.addField.bind(this);
   }
 
-  render() {
-    const { fields, props, tableId } = this.props;
+  renderTables = (tables,name) => {
+    const result = [];
 
+    for(let fieldKey in tables[name].fields){
+      result.push(
+        <Row>
+          <Col sm={6}>
+            {tables[name].fields[fieldKey].Name}
+          </Col>
+          <Col sm={6}>
+            {tables[name].fields[fieldKey].Type}
+          </Col>
+        </Row>
+      )
+    }
+
+    return result;
+  }
+
+
+
+  render() {
+    const { tables, name } = this.props;
+    console.log('tables', tables);
+    console.log('name', name);
+    console.log('testestesete', tables[name]);
     return (
-      <div>
-      </div>
+      <Grid>
+          <Row>
+            <Col sm={6}>
+              <div>Name</div>
+            </Col>
+            <Col sm={6}>
+              <div>Type</div>
+            </Col>
+          </Row>
+        { this.renderTables(tables,name) }
+      </Grid>
     );
   }
 

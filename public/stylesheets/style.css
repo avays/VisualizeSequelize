@@ -8,8 +8,7 @@
   width: 100%; }
 
 .canvas {
-  height: 100vh;
-  background-color: red; }
+  height: 100vh; }
 
 .container {
   margin: 0;
@@ -19,3 +18,9 @@
 .row {
   margin: 0;
   padding: 0; }
+
+.draggable-table .panel-heading {
+  font-weight: bold; }
+
+.draggable-table .panel {
+  width: 25%; }
