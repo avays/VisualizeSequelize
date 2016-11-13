@@ -19,8 +19,12 @@
   margin: 0;
   padding: 0; }
 
-.draggable-table .panel-heading {
-  font-weight: bold; }
-
+/* .draggable-table .panel-heading { */
+/*   font-weight: bold; */
+/* } */
 .draggable-table .panel {
-  width: 25%; }
+  width: 50%; }
+
+body {
+  background-image: url("http://orig05.deviantart.net/92fc/f/2011/011/6/7/grid_background_by_amv_ph34r-d36xsil.png");
+  background-size: cover; }

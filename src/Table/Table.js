@@ -14,16 +14,18 @@ class Table extends Component {
     const result = [];
 
     for(let fieldKey in tables[name].fields){
-      result.push(
-        <Row>
-          <Col sm={6}>
-            {tables[name].fields[fieldKey].Name}
-          </Col>
-          <Col sm={6}>
-            {tables[name].fields[fieldKey].Type}
-          </Col>
-        </Row>
-      )
+      if({}.hasOwnProperty.call(tables[name].fields, fieldKey)) {
+        result.push(
+          <Row>
+            <Col sm={6}>
+              {tables[name].fields[fieldKey].Name}
+            </Col>
+            <Col sm={6}>
+              {tables[name].fields[fieldKey].Type}
+            </Col>
+          </Row>
+        )
+      }
     }
 
     return result;
@@ -43,33 +45,31 @@ class Table extends Component {
     const { tables, name, idx } = this.props;
 
     return(
-          <Draggable
-              key={idx}
-          >
-            <div className="draggable-table">
-              <Panel header={
-                <Grid>
-                  <Col sm={8}>
-                    <bold>{name}</bold>
-                  </Col>
-                  <Col sm={4}>
-                    <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
-                  </Col>
-                </Grid>
-              }>
-                <Grid>
-                    <Row>
-                      <Col sm={6}>
-                        <div>Name</div>
-                      </Col>
-                      <Col sm={6}>
-                        <div>Type</div>
-                      </Col>
-                    </Row>
-                  { this.renderTables(tables,name) }
-                </Grid>
-              </Panel>
-            </div>
+          <Draggable key={idx}>
+              <div className="draggable-table">
+                <Panel header={
+                  <Grid>
+                    <Col sm={10}>
+                      <bold><h4>{name}</h4></bold>
+                    </Col>
+                    <Col sm={2}>
+                      <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
+                    </Col>
+                  </Grid>
+                }>
+                  <Grid>
+                      <Row>
+                        <Col sm={6}>
+                          <strong>Name</strong>
+                        </Col>
+                        <Col sm={6}>
+                          <strong>Type</strong>
+                        </Col>
+                      </Row>
+                    { this.renderTables(tables,name) }
+                  </Grid>
+                </Panel>
+              </div>
           </Draggable>
       );
   }
