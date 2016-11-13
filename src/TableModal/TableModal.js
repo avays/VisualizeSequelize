@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, FormGroup, Form, Col, FormControl, Panel } from 'react-bootstrap';
+import { Modal, FormGroup, Form, ControlLabel, Col, FormControl, Panel, Grid } from 'react-bootstrap';
 import _ from 'lodash';
 import store from '../store';
 
@@ -10,7 +10,7 @@ class TableModal extends Component {
       name: "",
       fields: {1: {Type: '...'}},
       methods: {},
-      associations: {}
+      associations: {1: {Type: '...', Target: '...'}}
     };
   }
 
@@ -73,13 +73,28 @@ class TableModal extends Component {
     }
   }
 
+  
+  onAssociationSet = (associationName) => {
+    /* console.log('targetid', fieldName.target.id);*/
+    let number = associationName.target.id.split('_')[1];
+    let type = associationName.target.id.split('_')[0];
+
+    const associations = _.cloneDeep(this.state.associations);
+    
+    if (!associations[number]) { associations[number] = {}; }
+    associations[number][type] = associationName.target.value;
+
+    this.setState({associations: associations});
+  }
+  
+  
   onFieldSet = (fieldName) => {
     /* console.log('targetid', fieldName.target.id);*/
     let number = fieldName.target.id.split('_')[1];
     let type = fieldName.target.id.split('_')[0];
 
     /* console.log('number', number);*/
-    console.log('type', type);
+    //console.log('type', type);
 
     const fields = _.cloneDeep(this.state.fields);
     if (!fields[number]) { fields[number] = {}; }
@@ -102,7 +117,82 @@ class TableModal extends Component {
     }
     return result;
   }
+  
+  createAssociations = () => {
+    const result = [];
+    let lastNum;
+    for (let associationKey in this.state.associations) {
+      lastNum = associationKey;
+      result.push(this.genAssociations(this.state.associations[associationKey], associationKey));
+    }
+    
+    console.log('num',lastNum);
+    console.log('association',this.state.associations);
+    if (this.state.associations[lastNum].Type && this.state.associations[lastNum].Type !== '...' && this.state.associations[lastNum].Name) {
+      result.push(this.genAssociations({[lastNum + 1]: {}}, lastNum + 1));
+    }
+    return result;
+  }
 
+  createAssociationTargets = () => {
+    //Let's get all Tables from State
+    let Temptables = _.cloneDeep(store.getState().tables);
+    
+    //Add the current Table from State As a minimum.
+    if(!Temptables[this.state.name]){Temptables[this.state.name] = {}}
+    
+    const result = [];
+    for (let tableName in Temptables){
+      result.push(<option value={tableName}>{tableName}</option>);
+    }
+    return result; 
+  }
+
+  genAssociations = (association,idx) => {
+    
+     const number = idx;
+    return  (
+    
+        <FormGroup controlId="association-associationName" key={idx}>
+            <Col sm={4}>
+            <FormControl
+                  onChange={this.onAssociationSet.bind(this)}
+                  id={`Type_${number}`}
+                  componentClass="select"
+                  placeholder="type"
+                  value={association.Type}
+              >
+                    <option value="...">Relationship</option>
+                    <option value="BelongsTo">BelongsTo</option>
+                    <option value="HasOne">HasOne</option>
+                    <option value="BelongsToMany">BelongsToMany</option>
+                    <option value="HasMany">HasMany</option>
+            </FormControl>
+            </Col>
+            <Col sm={4}>
+            <FormControl
+                  onChange={this.onAssociationSet.bind(this)}
+                  id={`Target_${number}`}
+                  componentClass="select"
+                  placeholder="type"
+                  value={association.Target}
+              >
+                    {this.createAssociationTargets()}
+            </FormControl>
+            </Col>
+            <Col sm={2}>
+              <FormControl
+                  onChange={this.onAssociationSet.bind(this)}
+                  id={`Name_${number}`}
+                  type="text"
+                  placeholder="Alias"
+                  value={association.Name || ""}
+              />
+            </Col>
+        </FormGroup>)
+      
+  }
+  
   genFields = (field, idx) => {
     /* console.log('field: ', field);
      * console.log('state: ', this.state);*/
@@ -167,9 +257,18 @@ class TableModal extends Component {
         <Modal.Body>
           <Panel header="Fields">
             <Form horizontal>
-              {this.createFields()}
+              <Grid>
+                 {this.createFields()}
+              </Grid>
             </Form>
           </Panel>
+                 
+          <Panel header="Associations">
+            <Form horizontal>
+              {this.createAssociations()}
+            </Form>
+          </Panel>
+          
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -187,14 +286,15 @@ class TableModal extends Component {
   submitBtn = () => {
     this.props.createTable({
       [this.state.name]: {
-        fields: this.state.fields
+        fields: this.state.fields,
+        associations: this.state.associations
       }
     });
     this.setState({
       name: "",
       fields: {1: {Type: '...'}},
       methods: {},
-      associations: {}
+      associations: {1: {Type: '...', Target: '...'}}
     });
     this.props.closeModal();
 
