@@ -1,9 +1,17 @@
 import { connect } from 'react-redux';
+import { showModal } from '../reducers/modal/actions';
 
 import CodePane from './CodePane';
 
-const mapStateToProps = ({ tables }) => ({
-  tables
+const mapStateToProps = ({ tables, modal }) => ({
+  tables,
+  modal
 });
 
-export default connect(mapStateToProps, null)(CodePane);
+const mapDispatchToProps = () => dispatch => ({
+  openModal: () => {
+    dispatch(showModal());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CodePane);

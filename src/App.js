@@ -14,14 +14,11 @@ class App extends Component {
     return (
       <Grid>
         <Row>
-          <Col sm={2} md={2} lg={2}>
-            <Sidebar />
-          </Col>
           <Col sm={8} md={8} lg={8} className="canvas">
             <Canvas />
             (this.props.modal.show && <TableModal />)
           </Col>
-          <Col sm={2} md={2} lg={2}>
+          <Col sm={4} md={4} lg={4}>
             <CodePane />
           </Col>
         </Row>

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Grid, Row, Col, Button, Panel } from 'react-bootstrap';
 import Draggable from 'react-draggable';
 import store from '../store';
+import ResizableBox from 'react-resizable-component';
 
 class Table extends Component {
   constructor(props) {
@@ -43,33 +44,31 @@ class Table extends Component {
     const { tables, name, idx } = this.props;
 
     return(
-          <Draggable
-              key={idx}
-          >
-            <div className="draggable-table">
-              <Panel header={
-                <Grid>
-                  <Col sm={8}>
-                    <bold>{name}</bold>
-                  </Col>
-                  <Col sm={4}>
-                    <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
-                  </Col>
-                </Grid>
-              }>
-                <Grid>
-                    <Row>
-                      <Col sm={6}>
-                        <div>Name</div>
-                      </Col>
-                      <Col sm={6}>
-                        <div>Type</div>
-                      </Col>
-                    </Row>
-                  { this.renderTables(tables,name) }
-                </Grid>
-              </Panel>
-            </div>
+          <Draggable key={idx}>
+              <div className="draggable-table">
+                <Panel header={
+                  <Grid>
+                    <Col sm={8}>
+                      <bold>{name}</bold>
+                    </Col>
+                    <Col sm={4}>
+                      <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
+                    </Col>
+                  </Grid>
+                }>
+                  <Grid>
+                      <Row>
+                        <Col sm={6}>
+                          <div>Name</div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>Type</div>
+                        </Col>
+                      </Row>
+                    { this.renderTables(tables,name) }
+                  </Grid>
+                </Panel>
+              </div>
           </Draggable>
       );
   }
