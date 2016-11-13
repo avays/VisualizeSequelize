@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import Table from '../Table/TableContainer';
-import { showModal } from '../reducers/modal/actions';
-import { setNewTableCoords } from '../reducers/newTableCoords/actions';
-import store from '../store';
 
 class Canvas extends Component {
   render() {

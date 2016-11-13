@@ -34,8 +34,10 @@ class CodePane extends Component {
     result += '\n\n';
 
     for (let tablename in tables) {
-      result += `const ${_.capitalize(tablename)} = require('./${_.camelCase(tablename)}');}`;
-      result += '\n';
+      if({}.hasOwnProperty.call(tables, tablename)) {
+        result += `const ${_.capitalize(tablename)} = require('./${_.camelCase(tablename)}');}`;
+        result += '\n';
+      }
     }
 
     result += '\n';
@@ -43,8 +45,10 @@ class CodePane extends Component {
     result += '\n';
 
     for (let tablename in tables) {
-      result += `  ${_.capitalize(tablename)},`;
-      result += '\n';
+      if({}.hasOwnProperty.call(tables, tablename)) {
+        result += `  ${_.capitalize(tablename)},`;
+        result += '\n';
+      }
     }
 
     result += '};';
@@ -81,11 +85,13 @@ class CodePane extends Component {
     result += `const ${_.capitalize(name)} = db.define('${_.camelCase(name)}', {`
     result += '\n';
     for (let fieldKey in table.fields) {
-      result += `  ${table.fields[fieldKey].Name}: {`;
-      result += '\n';
-      result += `    type: Sequelize.${table.fields[fieldKey].Type.toUpperCase()}`
-      result += '\n';
-      result += '  }';
+      if({}.hasOwnProperty.call(table.fields, fieldKey)) {
+        result += `  ${table.fields[fieldKey].Name}: {`;
+        result += '\n';
+        result += `    type: Sequelize.${table.fields[fieldKey].Type.toUpperCase()}`
+        result += '\n';
+        result += '  }';
+      }
     }
     result += '\n';
     result += '}, {';

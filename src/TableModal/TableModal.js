@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, FormGroup, Form, ControlLabel, Col, FormControl, Panel } from 'react-bootstrap';
+import { Modal, FormGroup, Form, Col, FormControl, Panel } from 'react-bootstrap';
 import _ from 'lodash';
 import store from '../store';
 
@@ -92,8 +92,10 @@ class TableModal extends Component {
     const result = [];
     let lastNum;
     for (let fieldKey in this.state.fields) {
-      lastNum = fieldKey;
-      result.push(this.genFields(this.state.fields[fieldKey], fieldKey));
+      if({}.hasOwnProperty.call(this.state.fields, fieldKey)) {
+        lastNum = fieldKey;
+        result.push(this.genFields(this.state.fields[fieldKey], fieldKey));
+      }
     }
     if (this.state.fields[lastNum].Type && this.state.fields[lastNum].Type !== '...' && this.state.fields[lastNum].Name) {
       result.push(this.genFields({[lastNum + 1]: {}}, lastNum + 1));
@@ -156,12 +158,6 @@ class TableModal extends Component {
   render() {
     const { modal } = this.props;
     const showModal = modal.show;
-    const table = modal.table;
-    const tablename = modal.tablename;
-
-    if (table && !this.state.name) {
-      /* this.setState({name: tablename, fields: table.fields});*/
-    }
 
     return (
       <Modal show={showModal}>
@@ -172,7 +168,6 @@ class TableModal extends Component {
           <Panel header="Fields">
             <Form horizontal>
               {this.createFields()}
-              {/* {this.genFields(1)} */}
             </Form>
           </Panel>
         </Modal.Body>

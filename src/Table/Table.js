@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { Grid, Row, Col, Button, Panel } from 'react-bootstrap';
 import Draggable from 'react-draggable';
 import store from '../store';
-import ResizableBox from 'react-resizable-component';
 
 class Table extends Component {
   constructor(props) {
@@ -15,16 +14,18 @@ class Table extends Component {
     const result = [];
 
     for(let fieldKey in tables[name].fields){
-      result.push(
-        <Row>
-          <Col sm={6}>
-            {tables[name].fields[fieldKey].Name}
-          </Col>
-          <Col sm={6}>
-            {tables[name].fields[fieldKey].Type}
-          </Col>
-        </Row>
-      )
+      if({}.hasOwnProperty.call(tables[name].fields, fieldKey)) {
+        result.push(
+          <Row>
+            <Col sm={6}>
+              {tables[name].fields[fieldKey].Name}
+            </Col>
+            <Col sm={6}>
+              {tables[name].fields[fieldKey].Type}
+            </Col>
+          </Row>
+        )
+      }
     }
 
     return result;
@@ -48,10 +49,10 @@ class Table extends Component {
               <div className="draggable-table">
                 <Panel header={
                   <Grid>
-                    <Col sm={8}>
-                      <bold>{name}</bold>
+                    <Col sm={10}>
+                      <bold><h4>{name}</h4></bold>
                     </Col>
-                    <Col sm={4}>
+                    <Col sm={2}>
                       <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
                     </Col>
                   </Grid>
@@ -59,10 +60,10 @@ class Table extends Component {
                   <Grid>
                       <Row>
                         <Col sm={6}>
-                          <div>Name</div>
+                          <strong>Name</strong>
                         </Col>
                         <Col sm={6}>
-                          <div>Type</div>
+                          <strong>Type</strong>
                         </Col>
                       </Row>
                     { this.renderTables(tables,name) }
