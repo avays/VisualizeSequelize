@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, FormGroup, Form, ControlLabel, Col, FormControl, Panel } from 'react-bootstrap';
 import _ from 'lodash';
+import store from '../store';
 
 class TableModal extends Component {
   constructor(props) {
@@ -11,7 +12,14 @@ class TableModal extends Component {
       methods: {},
       associations: {}
     };
+  }
 
+  componentWillReceiveProps() {
+    if(!this.state.name) {
+      const modal = store.getState().modal;
+      console.log('modal:', modal);
+      modal && modal.tablename && this.setState({name: modal.tablename, fields: modal.table.fields })
+    }
   }
 
   renderExtraInput = (field, number) => {
@@ -24,7 +32,7 @@ class TableModal extends Component {
           <Col sm={12}>
             <FormControl
             onChange={this.onFieldSet.bind(this)}
-            id={`Length_${number}`}
+            id={`Lengths_${number}`}
             type="number"
             min="1"
             max="255"
@@ -148,11 +156,17 @@ class TableModal extends Component {
   render() {
     const { modal } = this.props;
     const showModal = modal.show;
+    const table = modal.table;
+    const tablename = modal.tablename;
+
+    if (table && !this.state.name) {
+      /* this.setState({name: tablename, fields: table.fields});*/
+    }
 
     return (
       <Modal show={showModal}>
         <Modal.Header>
-          <h1>Model:</h1><input onInput={this.setName} placeholder="Input model name" />
+          <h1>Model:</h1><input onInput={this.setName} placeholder="Input model name" value={this.state.name}/>
         </Modal.Header>
         <Modal.Body>
           <Panel header="Fields">

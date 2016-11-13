@@ -1,10 +1,13 @@
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
 
-export const showModal = () => {
+export const showModal = (table, tablename) => {
   return {
     type: SHOW_MODAL,
-    payload: null
+    payload: {
+      table,
+      tablename
+    }
   };
 };
 

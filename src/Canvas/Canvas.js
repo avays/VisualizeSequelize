@@ -5,8 +5,6 @@ import { DropTarget } from 'react-dnd';
 import { showModal } from '../reducers/modal/actions';
 import { setNewTableCoords } from '../reducers/newTableCoords/actions';
 import store from '../store';
-import Draggable from 'react-draggable';
-import { Panel, Grid, Col } from 'react-bootstrap';
 
 const canvasTarget = {
   drop: (props, monitor) => {
@@ -35,24 +33,7 @@ class Canvas extends Component {
         position: 'relative'
       }}>
         {tables && Object.keys(tables).map((tableName, idx) => (
-          <Draggable
-              key={idx}
-          >
-            <div className="draggable-table">
-              <Panel header={
-                <Grid>
-                  <Col sm={8}>
-                    <bold>{tableName}</bold>
-                  </Col>
-                  <Col sm={4}>
-                    Edit btn here
-                  </Col>
-                </Grid>
-              }>
-                <Table  name={tableName} />
-              </Panel>
-            </div>
-          </Draggable>
+          <Table name={tableName} idx={idx} />
         ))}
       </div>
     );
