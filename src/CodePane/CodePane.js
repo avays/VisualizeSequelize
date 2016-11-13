@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Tab, Tabs, Well } from 'react-bootstrap';
 import _ from 'lodash';
 import Highlight from 'react-highlight';
 
@@ -8,7 +8,7 @@ class CodePane extends Component {
     const { tables } = this.props;
 
     return (
-      <div>
+      <Well>
         {Object.keys(tables).length ?
           <Tabs defaultActiveKey={-1} id="code-tabs">
             <Tab eventKey={-1} title="index.js">{this.renderIndex()}</Tab>
@@ -22,7 +22,7 @@ class CodePane extends Component {
             <Tab eventKey={Object.keys(tables).length} title={<button onClick={this.props.openModal}>+</button>}></Tab>
           </Tabs>
         }
-      </div>
+      </Well>
     );
   }
 

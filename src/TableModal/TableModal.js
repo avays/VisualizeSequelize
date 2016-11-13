@@ -14,7 +14,7 @@ class TableModal extends Component {
     };
   }
 
-  componentWillReceiveProps() {
+  componentWillMount() {
     if(!this.state.name) {
       const modal = store.getState().modal;
       console.log('modal:', modal);

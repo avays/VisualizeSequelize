@@ -13,6 +13,10 @@
   height: 100vh;
 }
 
+.canvas-panel {
+  background-color: ivory;
+}
+
 .container {
   margin: 0;
   padding: 0;
@@ -24,15 +28,14 @@
   padding: 0;
 }
 
-/* .draggable-table .panel-heading { */
-/*   font-weight: bold; */
-/* } */
+.panel-heading {
+  font-weight: bold;
+}
 
 .draggable-table .panel {
-  width: 50%;
+  width: 35%;
 }
 
 body {
-  background-image: url("http://orig05.deviantart.net/92fc/f/2011/011/6/7/grid_background_by_amv_ph34r-d36xsil.png");
-  background-size: cover;
+  background-color: gainsboro;
 }

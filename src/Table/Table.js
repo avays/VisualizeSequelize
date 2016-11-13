@@ -40,12 +40,20 @@ class Table extends Component {
     this.props.showModal(tables[tablename], tablename);
   }
 
+  onDrag = () => {
+    this.props.onDrag(this.props.tables[this.props.name], this.props.name, this.refs['tableref']);
+  }
+
+  componentDidMount = () => {
+    console.log("TABLE REFS: ", this.refs['tableref']);
+    this.props.onDrag(this.props.tables[this.props.name], this.props.name, this.refs['tableref']);
+  }
 
   render() {
     const { tables, name, idx } = this.props;
 
     return(
-          <Draggable key={idx}>
+          <Draggable key={idx} onDrag={this.onDrag} ref="tableref">
               <div className="draggable-table">
                 <Panel header={
                   <Grid>

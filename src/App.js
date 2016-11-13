@@ -16,6 +16,7 @@ class App extends Component {
           <Col sm={8} md={8} lg={8} className="canvas">
             <Canvas />
             {this.props.modal.show && <TableModal />}
+
           </Col>
           <Col sm={4} md={4} lg={4}>
             <CodePane />

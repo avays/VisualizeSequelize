@@ -1,6 +1,7 @@
 import { addField } from '../reducers/tables/actions';
 import { connect } from 'react-redux';
 import { showModal } from '../reducers/modal/actions';
+import { tableDrag } from '../reducers/tables/actions';
 
 import Table from './Table';
 
@@ -15,6 +16,9 @@ const mapDispatchToProps = () => dispatch => ({
   },
   showModal: (table, tablename) => {
     dispatch(showModal(table, tablename));
+  },
+  onDrag: (table, tablename, ref) => {
+    dispatch(tableDrag(table, tablename, ref));
   }
 });
 
