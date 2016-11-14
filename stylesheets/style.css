@@ -43,7 +43,8 @@
   height: 100%; }
 
 body {
-  background-color: gainsboro; }
+  background-color: gainsboro;
+  overflow-y: hidden; }
 
 .line {
   opacity: 1; }
