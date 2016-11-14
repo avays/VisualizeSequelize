@@ -9,7 +9,13 @@
 
 .canvas {
   height: 100vh;
-  z-index: 1; }
+  z-index: 1;
+  -webkit-box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -moz-box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -webkit-box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -moz-box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7); }
 
 .canvas-panel {
   background-color: ivory; }
@@ -40,4 +46,4 @@ body {
   background-color: gainsboro; }
 
 .line {
-  opacity: 0.25; }
+  opacity: 1; }

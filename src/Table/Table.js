@@ -45,7 +45,6 @@ class Table extends Component {
   }
 
   componentDidMount = () => {
-    console.log("TABLE REFS: ", this.refs['tableref']);
     this.props.onDrag(this.props.tables[this.props.name], this.props.name, this.refs['tableref']);
   }
 
@@ -53,7 +52,13 @@ class Table extends Component {
     const { tables, name, idx } = this.props;
 
     return(
-          <Draggable key={idx} onDrag={this.onDrag} ref="tableref">
+      <Draggable
+          key={idx}
+          onDrag={this.onDrag}
+          ref="tableref"
+          style={{position: 'absolute', top: '0', left: '0'}}
+          bounds="parent"
+      >
               <div className="draggable-table">
                 <Panel header={
                   <Grid>

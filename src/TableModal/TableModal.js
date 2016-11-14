@@ -17,7 +17,6 @@ class TableModal extends Component {
   componentWillMount() {
     if(!this.state.name) {
       const modal = store.getState().modal;
-      console.log('modal:', modal);
       modal && modal.tablename && this.setState({name: modal.tablename, fields: modal.table.fields, associations: modal.table.associations })
     }
   }
@@ -73,28 +72,22 @@ class TableModal extends Component {
     }
   }
 
-  
   onAssociationSet = (associationName) => {
-    /* console.log('targetid', fieldName.target.id);*/
     let number = associationName.target.id.split('_')[1];
     let type = associationName.target.id.split('_')[0];
 
     const associations = _.cloneDeep(this.state.associations);
-    
+
     if (!associations[number]) { associations[number] = {}; }
     associations[number][type] = associationName.target.value;
 
     this.setState({associations: associations});
   }
-  
-  
+
+
   onFieldSet = (fieldName) => {
-    /* console.log('targetid', fieldName.target.id);*/
     let number = fieldName.target.id.split('_')[1];
     let type = fieldName.target.id.split('_')[0];
-
-    /* console.log('number', number);*/
-    //console.log('type', type);
 
     const fields = _.cloneDeep(this.state.fields);
     if (!fields[number]) { fields[number] = {}; }
@@ -117,7 +110,7 @@ class TableModal extends Component {
     }
     return result;
   }
-  
+
   createAssociations = () => {
     const result = [];
     let lastNum;
@@ -125,9 +118,7 @@ class TableModal extends Component {
       lastNum = associationKey;
       result.push(this.genAssociations(this.state.associations[associationKey], associationKey));
     }
-    
-    console.log('num',lastNum);
-    console.log('association',this.state.associations);
+
     if (this.state.associations[lastNum].Type && this.state.associations[lastNum].Type != '...' && this.state.associations[lastNum].Name) {
       result.push(this.genAssociations({[lastNum + 1]: {}}, lastNum + 1));
     }
@@ -196,12 +187,7 @@ class TableModal extends Component {
   }
   
   genFields = (field, idx) => {
-    /* console.log('field: ', field);
-     * console.log('state: ', this.state);*/
-    /* const number = Object.keys(field)[0];*/
     const number = idx;
-    /* console.log('NUMBER(FIELD IDX): ', idx);*/
-    /* console.log('NUMBER: ', number);*/
        return  (<FormGroup controlId="field-fieldName" key={idx}>
             <Col sm={3}>
               <FormControl

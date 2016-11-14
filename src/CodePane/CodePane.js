@@ -45,10 +45,8 @@ class CodePane extends Component {
 
     for (let tablename in tables) {
         const table = tables[tablename];
-        console.log('TABLE: ', table);
         for (let association_num in table.associations) {
             const association = table.associations[association_num];
-            console.log('ASSOCIATION: ', association);
             if (association.Target !== '...' && association.Type != '...') {
               result += `${_.capitalize(_.camelCase(tablename))}.${_.camelCase(association.Type)}(${_.capitalize(_.camelCase(association.Target))});`;
               result += '\n';
@@ -93,9 +91,12 @@ class CodePane extends Component {
   }
 
   tableToCode(table, name) {
-    console.log('CODE_TABLE', table);
     let result = '';
     result += 'use strict;';
+    result += '\n\n';
+    result += 'const db = require(\'./db\');';
+    result += '\n';
+    result += 'const Sequelize = require(\'sequelize\');';
     result += '\n\n';
     result += `const ${_.capitalize(_.camelCase(name))} = db.define('${_.camelCase(name)}', {`
     result += '\n';
@@ -106,7 +107,8 @@ class CodePane extends Component {
           result += '\n';
           result += `    type: Sequelize.${table.fields[fieldKey].Type.toUpperCase()}`
           result += '\n';
-          result += '  }';
+          result += '  },';
+          result += '\n';
         }
       }
     }

@@ -17,7 +17,6 @@ class Canvas extends Component {
     for (let ref in this.refs) {
      tableCoords[ref] = ReactDOM.findDOMNode(this.refs[ref]).getBoundingClientRect();
     }
-    console.log(tableCoords);
   }
 
   render() {
@@ -37,12 +36,7 @@ class Canvas extends Component {
               {tables && Object.keys(tables).map((tableName, idx) => (
                 <Table name={tableName} idx={idx} key={idx} ref={tableName}/>
               ))}
-            <canvas
-            style={{
-              width: '100%',
-              height: '100%'
-            }}>
-            </canvas>
+            {this.renderAssociationLines()}
           </div>
         </Panel>
     );
@@ -52,29 +46,34 @@ class Canvas extends Component {
     const result = [];
     const { tables } = this.props;
 
-    console.log('rendering association lines');
     for (let table in tables) {
       for (let association_num in tables[table].associations) {
-        console.log("association num")
         const associatedTableName = tables[table].associations[association_num].Target;
-        console.log("associated table name: ", associatedTableName);
+        const associationType = tables[table].associations[association_num].Type;
+        const lineStyle = (associationType === 'HasOne' || associationType === 'BelongsTo') ? 'solid' : 'dashed';
         const fromCoords = tables[table].coords;
         if (fromCoords) {
           let fromX = (fromCoords.left + fromCoords.right) / 2;
-          let fromY = (fromCoords.bottom + fromCoords.top) / 2;
-
-          fromX = fromX;
-          fromY = fromY;
-          console.log('LINE FROM: ', fromX, fromY);
+          let fromY = (fromCoords.bottom + fromCoords.top) / 2 - 50;
 
           const toCoords = tables[associatedTableName] && tables[associatedTableName].coords;
           if (toCoords) {
             let toX = (toCoords.left + toCoords.right) / 2;
-            let toY = (toCoords.bottom + toCoords.top) / 2;
+            let toY = (toCoords.bottom + toCoords.top) / 2 - 50;
 
+            const leftX = Math.min(fromX, toX);
+            const rightX = Math.max(fromX, toX);
+            const leftY = (leftX === fromX) ? fromY : toY;
+            const rightY = (leftX === fromX) ? toY : fromY;
+            const midX = (leftX + rightX) / 2;
 
             result.push(
-              <Line className="line" from={{x: fromX, y: fromY}} to={{x: toX, y: toY}} style="5px solid lightblue"/>
+              <div>
+                {/* <Line className="line" from={{x: fromX, y: fromY}} to={{x: toX, y: toY}} style={`5px ${lineStyle} steelblue`}/> */}
+                <Line className="line" from={{x: leftX, y: leftY}} to={{x: midX, y: leftY}} style={`5px ${lineStyle} steelblue`}/>
+                <Line className="line" from={{x: rightX, y: rightY}} to={{x: midX, y: rightY}} style={`5px ${lineStyle} steelblue`}/>
+                <Line className="line" from={{x: midX, y: leftY}} to={{x: midX, y: rightY}} style={`5px ${lineStyle} steelblue`}/>
+              </div>
             );
           }
         }

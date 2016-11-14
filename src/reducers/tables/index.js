@@ -27,7 +27,6 @@ const getRelationshipInvert = (relationShip) => {
 export default (state = initialState, { type, payload }) => {
   switch(type) {
     case ADD_TABLE:
-      console.log('payload',payload);
       //Table is TableName
       //This whole logic will loop through associations and generate the inerse if it exists.
       for (let table in payload){
@@ -48,7 +47,6 @@ export default (state = initialState, { type, payload }) => {
                     if(tableToModify.associations[association_number_Target].Target == table){
                       //We have a match. lets update and add to payload.
                       tableToModify.associations[association_number_Target].Type == getRelationshipInvert(payload[table][properties][association_number].Type);
-                      console.log('Sweet it works!',tableToModify);
                       does_Exist = true;
                     }
                  }
@@ -57,7 +55,6 @@ export default (state = initialState, { type, payload }) => {
                     last_association++;
                     tableToModify.associations[last_association] = {Target: table, Type: getRelationshipInvert(payload[table][properties][association_number].Type)}
                  }
-                 console.log('adding tablename to payload: ', payload[table][properties][association_number].Target);
                  payload = {...payload, [payload[table][properties][association_number].Target]: tableToModify};
 
                }
