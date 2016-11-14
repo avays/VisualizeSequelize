@@ -11,6 +11,7 @@
 
 .canvas {
   height: 100vh;
+  z-index: 1;
 }
 
 .canvas-panel {
@@ -33,9 +34,22 @@
 }
 
 .draggable-table .panel {
-  width: 35%;
+  width: 150%;
+}
+
+.draggable-table {
+  z-index: 20;
+  position: absolute;
+}
+
+.canvas-panel .panel-body {
+  height: 100%;
 }
 
 body {
   background-color: gainsboro;
+}
+
+.line{
+  opacity: 0.25
 }

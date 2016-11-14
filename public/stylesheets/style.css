@@ -8,7 +8,8 @@
   width: 100%; }
 
 .canvas {
-  height: 100vh; }
+  height: 100vh;
+  z-index: 1; }
 
 .canvas-panel {
   background-color: ivory; }
@@ -25,13 +26,18 @@
 .panel-heading {
   font-weight: bold; }
 
-.panel {
-  -webkit-box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.75); }
-
 .draggable-table .panel {
-  width: 35%; }
+  width: 150%; }
+
+.draggable-table {
+  z-index: 20;
+  position: absolute; }
+
+.canvas-panel .panel-body {
+  height: 100%; }
 
 body {
   background-color: gainsboro; }
+
+.line {
+  opacity: 0.25; }

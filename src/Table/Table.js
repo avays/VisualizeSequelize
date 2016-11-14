@@ -15,6 +15,7 @@ class Table extends Component {
 
     for(let fieldKey in tables[name].fields){
       if({}.hasOwnProperty.call(tables[name].fields, fieldKey)) {
+        if (tables[name].fields[fieldKey].Type !== '...' && tables[name].fields[fieldKey].Name !== '')
         result.push(
           <Row>
             <Col sm={6}>
@@ -35,7 +36,6 @@ class Table extends Component {
     const tablename = tableEvt.target.id;
     // find table
     const tables = store.getState().tables;
-    console.log('tablename in editTable', tablename);
 
     this.props.showModal(tables[tablename], tablename);
   }
@@ -57,10 +57,10 @@ class Table extends Component {
               <div className="draggable-table">
                 <Panel header={
                   <Grid>
-                    <Col sm={10}>
+                    <Col sm={9}>
                       <bold><h4>{name}</h4></bold>
                     </Col>
-                    <Col sm={2}>
+                    <Col sm={3}>
                       <Button id={name} bsStyle="info" onClick={this.editTable}> Edit</Button>
                     </Col>
                   </Grid>

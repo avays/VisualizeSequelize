@@ -35,11 +35,26 @@ class CodePane extends Component {
 
     for (let tablename in tables) {
       if({}.hasOwnProperty.call(tables, tablename)) {
-        result += `const ${_.capitalize(_.camelCase(tablename))} = require('./${_.camelCase(tablename)}');}`;
         result += '\n';
+        result += `const ${_.capitalize(_.camelCase(tablename))} = require('./${_.camelCase(tablename)}');`;
       }
     }
 
+    result += '\n';
+    result += '\n';
+
+    for (let tablename in tables) {
+        const table = tables[tablename];
+        console.log('TABLE: ', table);
+        for (let association_num in table.associations) {
+            const association = table.associations[association_num];
+            console.log('ASSOCIATION: ', association);
+            if (association.Target !== '...' && association.Type != '...') {
+              result += `${_.capitalize(_.camelCase(tablename))}.${_.camelCase(association.Type)}(${_.capitalize(_.camelCase(association.Target))});`;
+              result += '\n';
+            }
+        }
+    }
     result += '\n';
     result += 'module.exports = {';
     result += '\n';
@@ -86,11 +101,13 @@ class CodePane extends Component {
     result += '\n';
     for (let fieldKey in table.fields) {
       if({}.hasOwnProperty.call(table.fields, fieldKey)) {
-        result += `  ${table.fields[fieldKey].Name}: {`;
-        result += '\n';
-        result += `    type: Sequelize.${table.fields[fieldKey].Type.toUpperCase()}`
-        result += '\n';
-        result += '  }';
+        if(table.fields[fieldKey].Name !== '' && table.fields[fieldKey].Type !== '...') {
+          result += `  ${table.fields[fieldKey].Name}: {`;
+          result += '\n';
+          result += `    type: Sequelize.${table.fields[fieldKey].Type.toUpperCase()}`
+          result += '\n';
+          result += '  }';
+        }
       }
     }
     result += '\n';
