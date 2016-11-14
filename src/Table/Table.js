@@ -4,6 +4,7 @@ import { Grid, Row, Col, Button, Panel } from 'react-bootstrap';
 import Draggable from 'react-draggable';
 import store from '../store';
 
+
 class Table extends Component {
   constructor(props) {
     super(props);
@@ -56,10 +57,9 @@ class Table extends Component {
           key={idx}
           onDrag={this.onDrag}
           ref="tableref"
-          style={{position: 'absolute', top: '0', left: '0'}}
           bounds="parent"
       >
-              <div className="draggable-table">
+              <div className="draggable-table" style={{position: 'absolute', top: '0', left: '0'}}>
                 <Panel header={
                   <Grid>
                     <Col sm={9}>

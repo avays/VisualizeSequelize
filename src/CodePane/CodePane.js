@@ -47,8 +47,21 @@ class CodePane extends Component {
         const table = tables[tablename];
         for (let association_num in table.associations) {
             const association = table.associations[association_num];
-            if (association.Target !== '...' && association.Type != '...') {
-              result += `${_.capitalize(_.camelCase(tablename))}.${_.camelCase(association.Type)}(${_.capitalize(_.camelCase(association.Target))});`;
+            if (association.Target !== '...' && association.Type !== '...') {
+              if (association.Type === 'BelongsToMany') {
+                result += `${_.capitalize(_.camelCase(tablename))}.${_.camelCase(association.Type)}(${_.capitalize(_.camelCase(association.Target))}, {through: ${_.capitalize(_.camelCase(tablename))}${_.capitalize(_.camelCase(association.Target))}`;
+                if (association.Name) {
+                  result += `, as: ${_.capitalize(_.camelCase(association.Name))}`;
+                }
+                result += `});`;
+              }
+              else {
+                result += `${_.capitalize(_.camelCase(tablename))}.${_.camelCase(association.Type)}(${_.capitalize(_.camelCase(association.Target))}`;
+                if (association.Name) {
+                  result += `, {as: ${_.capitalize(_.camelCase(association.Name))}}`;
+                }
+                result += `);`;
+              }
               result += '\n';
             }
         }
