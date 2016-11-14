@@ -1,0 +1,49 @@
+.tile {
+  background-color: white;
+  outline: 1px solid black; }
+
+.sidebar {
+  height: 100vh;
+  background-color: black;
+  width: 100%; }
+
+.canvas {
+  height: 100vh;
+  z-index: 1;
+  -webkit-box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -moz-box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  box-shadow: inset -6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -webkit-box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  -moz-box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7);
+  box-shadow: inset 6px 0px 24px 0px rgba(97, 97, 97, 0.7); }
+
+.canvas-panel {
+  background-color: ivory; }
+
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%; }
+
+.row {
+  margin: 0;
+  padding: 0; }
+
+.panel-heading {
+  font-weight: bold; }
+
+.draggable-table .panel {
+  width: 150%; }
+
+.draggable-table {
+  z-index: 20;
+  position: absolute; }
+
+.canvas-panel .panel-body {
+  height: 100%; }
+
+body {
+  background-color: gainsboro; }
+
+.line {
+  opacity: 1; }
