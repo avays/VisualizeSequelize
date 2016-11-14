@@ -31,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
       //This whole logic will loop through associations and generate the inerse if it exists.
       for (let table in payload){
         for (let properties in payload[table]){
-          if(properties == 'associations'){
+          if(properties === 'associations'){
             for(let association_number in payload[table][properties]){
                let tableToModify = _.cloneDeep(state[payload[table][properties][association_number].Target]);
 
@@ -44,9 +44,9 @@ export default (state = initialState, { type, payload }) => {
                 if(tableToModify){
                  for(let association_number_Target in tableToModify.associations){
                     last_association = +association_number_Target;
-                    if(tableToModify.associations[association_number_Target].Target == table){
+                    if(tableToModify.associations[association_number_Target].Target === table){
                       //We have a match. lets update and add to payload.
-                      tableToModify.associations[association_number_Target].Type == getRelationshipInvert(payload[table][properties][association_number].Type);
+                      tableToModify.associations[association_number_Target].Type = getRelationshipInvert(payload[table][properties][association_number].Type);
                       does_Exist = true;
                     }
                  }
